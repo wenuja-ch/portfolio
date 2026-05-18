@@ -1,3 +1,4 @@
+// @ts-ignore
 import Portfolio from "./Portfolio";
 
 function App() {

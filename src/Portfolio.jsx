@@ -238,17 +238,17 @@ export default function Portfolio() {
 
             <div className="p-6 rounded-3xl bg-gradient-to-br from-white/10 to-transparent backdrop-blur-2xl border border-white/20 shadow-[inset_0_1px_2px_rgba(255,255,255,0.2),0_8px_32px_rgba(0,0,0,0.5)] hover:border-green-400 hover:shadow-green-500/20 transition">
               <h3 className="text-green-400 text-xl font-semibold mb-3">Email</h3>
-              <p className="text-gray-400">yourmail@example.com</p>
+              <p className="text-gray-400">lapmy2006@gmail.com</p>
             </div>
 
             <div className="p-6 rounded-3xl bg-gradient-to-br from-white/10 to-transparent backdrop-blur-2xl border border-white/20 shadow-[inset_0_1px_2px_rgba(255,255,255,0.2),0_8px_32px_rgba(0,0,0,0.5)] hover:border-green-400 hover:shadow-green-500/20 transition">
               <h3 className="text-green-400 text-xl font-semibold mb-3">GitHub</h3>
-              <p className="text-gray-400">github.com/yourprofile</p>
+              <p className="text-gray-400">github.com</p>
             </div>
 
             <div className="p-6 rounded-3xl bg-gradient-to-br from-white/10 to-transparent backdrop-blur-2xl border border-white/20 shadow-[inset_0_1px_2px_rgba(255,255,255,0.2),0_8px_32px_rgba(0,0,0,0.5)] hover:border-green-400 hover:shadow-green-500/20 transition">
               <h3 className="text-green-400 text-xl font-semibold mb-3">LinkedIn</h3>
-              <p className="text-gray-400">linkedin.com/in/yourprofile</p>
+              <p className="text-gray-400">linkedin.com</p>
             </div>
 
           </div>

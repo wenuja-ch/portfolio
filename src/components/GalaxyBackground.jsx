@@ -12,9 +12,8 @@ export default function GalaxyBackground({ isDarkMode = true }) {
     canvas.width = width;
     canvas.height = height;
 
-    // Calculate a safe number of particles for performance (O(n^2) complexity)
-    // Adjust density based on screen size, max 180 particles
-    const particleCount = Math.min(Math.floor((width * height) / 8000), 180);
+    // Calculate a safe number of particles for performance
+    const particleCount = Math.min(Math.floor((width * height) / 6000), 200);
     const particles = [];
 
     let mouse = { x: -1000, y: -1000 };
@@ -23,9 +22,9 @@ export default function GalaxyBackground({ isDarkMode = true }) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 1.2,
-        vy: (Math.random() - 0.5) * 1.2,
-        radius: Math.random() * 2 + 0.5,
+        vx: (Math.random() - 0.5) * 1.5,
+        vy: (Math.random() - 0.5) * 1.5,
+        radius: Math.random() * 2.5 + 0.5,
         color: Math.random() > 0.5 ? '#4ade80' : '#10b981', // Green variations
       });
     }
@@ -54,7 +53,6 @@ export default function GalaxyBackground({ isDarkMode = true }) {
     let animationId;
 
     const render = () => {
-      // Clear canvas for crisp lines
       ctx.clearRect(0, 0, width, height);
 
       for (let i = 0; i < particles.length; i++) {
@@ -68,52 +66,39 @@ export default function GalaxyBackground({ isDarkMode = true }) {
         if (p.x < 0 || p.x > width) p.vx *= -1;
         if (p.y < 0 || p.y > height) p.vy *= -1;
 
-        // Keep particles strictly within bounds after resize
         p.x = Math.max(0, Math.min(p.x, width));
         p.y = Math.max(0, Math.min(p.y, height));
 
-        // Draw particle
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.fill();
-
-        // Connect with mouse
+        // Interactive motion with mouse
         const dxMouse = mouse.x - p.x;
         const dyMouse = mouse.y - p.y;
         const distMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
         
-        if (distMouse < 200) {
-          ctx.beginPath();
-          ctx.moveTo(p.x, p.y);
-          ctx.lineTo(mouse.x, mouse.y);
-          // Opacity fades as it gets further
-          ctx.strokeStyle = `rgba(74, 222, 128, ${0.5 - distMouse / 400})`;
-          ctx.lineWidth = 1;
-          ctx.stroke();
-          
-          // Interactive attraction to mouse
-          p.x += dxMouse * 0.015;
-          p.y += dyMouse * 0.015;
+        // Increase interaction radius and force
+        if (distMouse < 300) {
+          const force = (300 - distMouse) / 300;
+          // Stronger push away from the mouse
+          p.x -= (dxMouse / distMouse) * force * 8;
+          p.y -= (dyMouse / distMouse) * force * 8;
         }
 
-        // Connect with other particles
-        for (let j = i + 1; j < particles.length; j++) {
-          const p2 = particles[j];
-          const dx = p.x - p2.x;
-          const dy = p.y - p2.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-
-          if (distance < 140) {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            const opacity = 1 - distance / 140;
-            ctx.strokeStyle = `rgba(16, 185, 129, ${opacity * 0.4})`;
-            ctx.lineWidth = 0.8;
-            ctx.stroke();
-          }
+        // Draw particle (ONLY dots, no lines)
+        ctx.beginPath();
+        
+        // Make particles near mouse larger and glow brighter
+        if (distMouse < 300) {
+           const force = (300 - distMouse) / 300;
+           ctx.arc(p.x, p.y, p.radius + (force * 2), 0, Math.PI * 2);
+           ctx.fillStyle = '#6ee7b7'; // Brighter green when near mouse
+           ctx.shadowBlur = 15;
+           ctx.shadowColor = '#6ee7b7';
+        } else {
+           ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+           ctx.fillStyle = p.color;
+           ctx.shadowBlur = 0;
         }
+        
+        ctx.fill();
       }
 
       animationId = requestAnimationFrame(render);
@@ -132,7 +117,7 @@ export default function GalaxyBackground({ isDarkMode = true }) {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 -z-20 w-full h-full opacity-70"
+      className="fixed inset-0 -z-20 w-full h-full opacity-80"
       style={{ pointerEvents: 'none' }}
     />
   );

@@ -69,32 +69,53 @@ export default function Portfolio() {
       </nav>
 
       {/* Hero Section */}
-      <section id="home" className="min-h-screen flex items-center justify-center px-6">
-        <div className="text-center max-w-4xl">
+      <section id="home" className="min-h-screen flex items-center justify-center px-6 pt-20">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
 
-          <div className="inline-block px-4 py-2 mb-6 rounded-full border border-green-500/30 bg-green-500/10 text-green-300 animate-bounce">
-            Computer Scientist
+          {/* Text Content */}
+          <div className="text-left order-2 md:order-1">
+            <div className="inline-block px-4 py-2 mb-6 rounded-full border border-green-500/30 bg-green-500/10 text-green-300 animate-bounce">
+              Computer Scientist
+            </div>
+
+            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight mb-6">
+              Hi, I am <span className="text-green-400">Wenuja</span>
+            </h1>
+
+            <p className="text-gray-400 text-lg md:text-xl mb-10 max-w-lg">
+              Passionate about Artificial Intelligence, Smart Systems, Modern Web Applications, and Software Development Projects.
+            </p>
+
+            <div className="flex flex-wrap gap-4">
+              <a
+                href="#projects"
+                className="px-8 py-4 rounded-2xl bg-green-500 hover:bg-green-300 text-black shadow-lg shadow-green-500/40 font-semibold transition transform hover:scale-105"
+              >
+                View Projects
+              </a>
+
+              <button className="px-8 py-4 rounded-2xl border border-white/20 hover:border-green-400 hover:text-green-400 transition">
+                Download CV
+              </button>
+            </div>
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight mb-6">
-            Hi, I am <span className="text-green-400">Wenuja</span>
-          </h1>
-
-          <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10">
-            Passionate about Artificial Intelligence, Smart Systems, Modern Web Applications, and Software Development Projects.
-          </p>
-
-          <div className="flex flex-wrap justify-center gap-4">
-            <a
-              href="#projects"
-              className="px-8 py-4 rounded-2xl bg-green-500 hover:bg-green-300 text-black shadow-lg shadow-green-500/40 font-semibold transition transform hover:scale-105"
-            >
-              View Projects
-            </a>
-
-            <button className="px-8 py-4 rounded-2xl border border-white/20 hover:border-green-400 hover:text-green-400 transition">
-              Download CV
-            </button>
+          {/* Photo Section */}
+          <div className="flex justify-center md:justify-end order-1 md:order-2">
+            <div className="relative w-72 h-72 md:w-96 md:h-96 group">
+              {/* Decorative Effects */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-green-500 to-emerald-300 rounded-[3rem] rotate-6 opacity-20 group-hover:rotate-12 group-hover:opacity-40 transition-all duration-500"></div>
+              <div className="absolute inset-0 bg-gradient-to-bl from-green-500 to-emerald-300 rounded-[3rem] -rotate-6 opacity-20 group-hover:-rotate-12 group-hover:opacity-40 transition-all duration-500"></div>
+              
+              {/* Photo Frame */}
+              <div className="relative h-full w-full bg-black/50 backdrop-blur-md border border-white/20 rounded-[3rem] overflow-hidden shadow-[0_0_40px_rgba(74,222,128,0.2)] group-hover:border-green-400/50 group-hover:shadow-[0_0_60px_rgba(74,222,128,0.4)] transition-all duration-500 z-10 flex items-center justify-center">
+                <img 
+                  src="/avatar.png" 
+                  alt="Wenuja - Profile" 
+                  className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+                />
+              </div>
+            </div>
           </div>
 
         </div>

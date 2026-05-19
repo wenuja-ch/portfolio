@@ -1,5 +1,36 @@
+import { useState, useEffect } from 'react';
 import GalaxyBackground from './components/GalaxyBackground';
 import TiltCard from './components/TiltCard';
+
+const TypewriterText = () => {
+  const text1 = "Hi, I am ";
+  const text2 = "Wenuja";
+  
+  const [currentText1, setCurrentText1] = useState("");
+  const [currentText2, setCurrentText2] = useState("");
+  
+  useEffect(() => {
+    if (currentText1.length < text1.length) {
+      const timeout = setTimeout(() => {
+        setCurrentText1(text1.slice(0, currentText1.length + 1));
+      }, 100);
+      return () => clearTimeout(timeout);
+    } else if (currentText2.length < text2.length) {
+      const timeout = setTimeout(() => {
+        setCurrentText2(text2.slice(0, currentText2.length + 1));
+      }, 150);
+      return () => clearTimeout(timeout);
+    }
+  }, [currentText1, currentText2]);
+
+  return (
+    <>
+      {currentText1}
+      <span className="text-green-400">{currentText2}</span>
+      <span className="animate-[pulse_1s_ease-in-out_infinite] border-r-4 border-green-400 ml-1"></span>
+    </>
+  );
+};
 
 export default function Portfolio() {
   const projects = [
@@ -42,7 +73,7 @@ export default function Portfolio() {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white overflow-x-hidden backdrop-blur-xl">
+    <div className="relative z-0 min-h-screen bg-black text-white overflow-x-hidden">
 
       <GalaxyBackground />
 
@@ -54,23 +85,23 @@ export default function Portfolio() {
       </div>
 
       {/* Navbar */}
-      <nav className="fixed top-0 w-full backdrop-blur-2xl bg-white/5 border-b border-white/10 shadow-2xl z-50">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <div className="fixed top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-5xl z-50">
+        <nav className="w-full backdrop-blur-[80px] backdrop-saturate-[180%] backdrop-contrast-[110%] backdrop-brightness-[110%] bg-white/[0.03] border border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.4),inset_0_1px_1px_rgba(255,255,255,0.15),inset_0_0_20px_rgba(255,255,255,0.05)] rounded-full px-8 py-4 flex justify-between items-center transition-all duration-500 hover:bg-white/[0.08] hover:shadow-[0_8px_32px_rgba(74,222,128,0.1),inset_0_1px_1px_rgba(255,255,255,0.2)]">
           <h1 className="text-2xl font-bold text-green-400">Wenuja</h1>
 
-          <div className="hidden md:flex gap-8 text-sm">
+          <div className="hidden md:flex gap-8 text-sm font-medium">
             <a href="#home" className="hover:text-green-400 transition">Home</a>
             <a href="#about" className="hover:text-green-400 transition">About</a>
             <a href="#projects" className="hover:text-green-400 transition">Projects</a>
             <a href="#skills" className="hover:text-green-400 transition">Skills</a>
             <a href="#contact" className="hover:text-green-400 transition">Contact</a>
           </div>
-        </div>
-      </nav>
+        </nav>
+      </div>
 
       {/* Hero Section */}
-      <section id="home" className="min-h-screen flex items-center justify-center px-6 pt-20">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+      <section id="home" className="min-h-screen flex items-center justify-center px-6 pt-32">
+        <div className="w-full max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
 
           {/* Text Content */}
           <div className="text-left order-2 md:order-1">
@@ -78,8 +109,8 @@ export default function Portfolio() {
               Computer Scientist
             </div>
 
-            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight mb-6">
-              Hi, I am <span className="text-green-400">Wenuja</span>
+            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight mb-6 h-[120px] md:h-[160px] flex items-center">
+              <div><TypewriterText /></div>
             </h1>
 
             <p className="text-gray-400 text-lg md:text-xl mb-10 max-w-lg">
@@ -101,8 +132,8 @@ export default function Portfolio() {
           </div>
 
           {/* Photo Section */}
-          <div className="flex justify-center md:justify-end order-1 md:order-2">
-            <div className="relative w-72 h-72 md:w-96 md:h-96 group">
+          <div className="flex justify-center md:justify-end order-1 md:order-2 lg:translate-x-12 xl:translate-x-24">
+            <div className="relative w-72 h-72 md:w-96 md:h-96 xl:w-[26rem] xl:h-[26rem] group">
               {/* Decorative Effects */}
               <div className="absolute inset-0 bg-gradient-to-tr from-green-500 to-emerald-300 rounded-[3rem] rotate-6 opacity-20 group-hover:rotate-12 group-hover:opacity-40 transition-all duration-500"></div>
               <div className="absolute inset-0 bg-gradient-to-bl from-green-500 to-emerald-300 rounded-[3rem] -rotate-6 opacity-20 group-hover:-rotate-12 group-hover:opacity-40 transition-all duration-500"></div>

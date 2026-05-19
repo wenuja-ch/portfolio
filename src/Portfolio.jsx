@@ -1,34 +1,57 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import GalaxyBackground from './components/GalaxyBackground';
 import TiltCard from './components/TiltCard';
 
-const TypewriterText = () => {
-  const text1 = "Hi, I am ";
-  const text2 = "Wenuja";
-  
+const ScrollTypewriter = ({ text1, text2 = "", delay = 100 }) => {
   const [currentText1, setCurrentText1] = useState("");
   const [currentText2, setCurrentText2] = useState("");
-  
+  const [isVisible, setIsVisible] = useState(false);
+  const containerRef = useRef(null);
+
   useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
     if (currentText1.length < text1.length) {
       const timeout = setTimeout(() => {
         setCurrentText1(text1.slice(0, currentText1.length + 1));
-      }, 100);
+      }, delay);
       return () => clearTimeout(timeout);
-    } else if (currentText2.length < text2.length) {
+    } else if (text2 && currentText2.length < text2.length) {
       const timeout = setTimeout(() => {
         setCurrentText2(text2.slice(0, currentText2.length + 1));
-      }, 150);
+      }, delay + 50);
       return () => clearTimeout(timeout);
     }
-  }, [currentText1, currentText2]);
+  }, [currentText1, currentText2, isVisible, text1, text2, delay]);
+
+  const isTypingCompleted = currentText1.length === text1.length && (!text2 || currentText2.length === text2.length);
 
   return (
-    <>
+    <span ref={containerRef}>
       {currentText1}
-      <span className="text-green-400">{currentText2}</span>
-      <span className="animate-[pulse_1s_ease-in-out_infinite] border-r-4 border-green-400 ml-1"></span>
-    </>
+      {text2 && <span className="text-green-400">{currentText2}</span>}
+      {!isTypingCompleted && (
+        <span className="animate-[pulse_1s_ease-in-out_infinite] border-r-4 border-green-400 ml-1"></span>
+      )}
+    </span>
   );
 };
 
@@ -110,7 +133,7 @@ export default function Portfolio() {
             </div>
 
             <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight mb-6 h-[120px] md:h-[160px] flex items-center">
-              <div><TypewriterText /></div>
+              <div><ScrollTypewriter text1="Hi, I am " text2="Wenuja" /></div>
             </h1>
 
             <p className="text-gray-400 text-lg md:text-xl mb-10 max-w-lg">
@@ -157,8 +180,8 @@ export default function Portfolio() {
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
 
           <div>
-            <h2 className="text-4xl font-bold mb-8">
-              About <span className="text-green-400">Me</span>
+            <h2 className="text-4xl font-bold mb-8 h-[40px] flex items-center">
+              <div><ScrollTypewriter text1="About " text2="Me" delay={75} /></div>
             </h2>
 
             <p className="text-gray-400 leading-8 text-lg">
@@ -197,8 +220,8 @@ export default function Portfolio() {
       <section id="projects" className="py-24 px-6 bg-white/5">
         <div className="max-w-7xl mx-auto">
 
-          <h2 className="text-4xl font-bold text-center mb-16">
-            Featured <span className="text-green-400">Projects</span>
+          <h2 className="text-4xl font-bold text-center mb-16 h-[40px] flex items-center justify-center">
+            <div><ScrollTypewriter text1="Featured " text2="Projects" delay={75} /></div>
           </h2>
 
           <div className="grid md:grid-cols-2 gap-8">
@@ -235,8 +258,8 @@ export default function Portfolio() {
       <section id="skills" className="py-24 px-6">
         <div className="max-w-6xl mx-auto text-center">
 
-          <h2 className="text-4xl font-bold mb-16">
-            Technical <span className="text-green-400">Skills</span>
+          <h2 className="text-4xl font-bold mb-16 h-[40px] flex items-center justify-center">
+            <div><ScrollTypewriter text1="Technical " text2="Skills" delay={75} /></div>
           </h2>
 
           <div className="flex flex-wrap justify-center gap-6">
@@ -257,8 +280,8 @@ export default function Portfolio() {
       <section id="contact" className="py-24 px-6 bg-white/5">
         <div className="max-w-4xl mx-auto text-center">
 
-          <h2 className="text-4xl font-bold mb-8">
-            Contact <span className="text-green-400">Me</span>
+          <h2 className="text-4xl font-bold mb-8 h-[40px] flex items-center justify-center">
+            <div><ScrollTypewriter text1="Contact " text2="Me" delay={75} /></div>
           </h2>
 
           <p className="text-gray-400 text-lg mb-12">

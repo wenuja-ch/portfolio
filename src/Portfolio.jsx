@@ -63,9 +63,9 @@ export default function Portfolio() {
       tech: "AI • Flutter • Firebase • Machine Learning",
     },
     {
-      title: "Smart Campus AI",
-      desc: "Smart campus management system integrating AI features for automation, student support, and intelligent campus services.",
-      tech: "Python • AI • Web Development • Database Systems",
+      title: "Smart Campus API",
+      desc: "Developed a Smart Campus REST API using Java and JAX-RS (Jersey) to manage rooms, sensors, and sensor readings within a smart campus environment. Implemented RESTful endpoints, JSON data handling, and backend services with Maven and Grizzly HTTP Server for efficient API communication and testing using Postman.",
+      tech: "Java 17 • JAX-RS (Jersey) • Maven • Grizzly HTTP Server • JSON • Postman",
     },
     {
       title: "Future AI Innovation",
